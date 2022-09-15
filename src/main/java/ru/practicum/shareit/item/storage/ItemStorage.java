@@ -67,11 +67,11 @@ public class ItemStorage implements IItemStorage {
 
         List<ItemDto> result = new ArrayList<>();
 
-        if(!text.isEmpty()){
+        if (!text.isEmpty()) {
             result = inMemoryItemStorage.entrySet().stream()
                     .filter(item -> (
                             item.getValue().getDescription().toLowerCase().contains(textLower)
-                            || item.getValue().getName().toLowerCase().contains(textLower))
+                                    || item.getValue().getName().toLowerCase().contains(textLower))
                             && item.getValue().getAvailable())
                     .map(Map.Entry::getValue)
                     .map(ItemDtoMapper::toDto)
