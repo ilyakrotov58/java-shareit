@@ -6,10 +6,6 @@ import lombok.Data;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-/**
- * TODO Sprint add-item-requests.
- */
-
 @Data
 @AllArgsConstructor
 public class ItemRequest {

@@ -40,4 +40,10 @@ public class ExceptionHandlers {
         log.error("500 {}", e.getLocalizedMessage());
         return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
+    @ExceptionHandler
+    public ResponseEntity<String> handleThrowableException(final Throwable e) {
+        log.error("400 {}", e.getLocalizedMessage());
+        return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
+    }
 }

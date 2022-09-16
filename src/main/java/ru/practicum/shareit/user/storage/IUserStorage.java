@@ -12,7 +12,6 @@ public interface IUserStorage {
 
     List<UserDto> getAll();
 
-    // TODO Will be deleted after connecting to DB
     List<Long> getAllUserIds();
 
     UserDto getById(long userId);

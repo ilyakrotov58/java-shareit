@@ -8,10 +8,6 @@ import ru.practicum.shareit.item.service.IItemService;
 import javax.validation.Valid;
 import java.util.List;
 
-/**
- * TODO Sprint add-controllers.
- */
-
 @RestController
 @RequestMapping("/items")
 public class ItemController {
