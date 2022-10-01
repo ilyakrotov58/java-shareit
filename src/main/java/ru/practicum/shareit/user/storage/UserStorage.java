@@ -16,7 +16,6 @@ import java.util.stream.Collectors;
 public class UserStorage implements IUserStorage {
 
     private final Map<Long, User> inMemoryUserStorage = new HashMap<>();
-
     private long id = 0;
 
     @Override
@@ -55,7 +54,6 @@ public class UserStorage implements IUserStorage {
                 .collect(Collectors.toList());
     }
 
-    // TODO Will be deleted after connecting to DB
     @Override
     public List<Long> getAllUserIds() {
         return inMemoryUserStorage.entrySet().stream()

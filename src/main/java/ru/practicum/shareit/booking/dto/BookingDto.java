@@ -5,10 +5,6 @@ import lombok.Data;
 
 import javax.validation.constraints.NotNull;
 
-/**
- * TODO Sprint add-bookings.
- */
-
 @Data
 @AllArgsConstructor
 public class BookingDto {
