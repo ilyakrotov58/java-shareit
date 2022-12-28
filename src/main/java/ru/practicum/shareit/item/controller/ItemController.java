@@ -4,7 +4,9 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import ru.practicum.shareit.item.dto.CommentDto;
 import ru.practicum.shareit.item.dto.ItemDto;
+import ru.practicum.shareit.item.model.Comment;
 import ru.practicum.shareit.item.service.IItemService;
 
 import javax.validation.Valid;
@@ -20,8 +22,8 @@ public class ItemController {
 
     @GetMapping("/{itemId}")
     @Operation(summary = "Get Item by id")
-    public ItemDto getById(@PathVariable long itemId) {
-        return service.getById(itemId);
+    public ItemDto getById(@PathVariable long itemId, @RequestHeader("X-Sharer-User-Id") long userId) {
+        return service.getById(itemId, userId);
     }
 
     @PostMapping
@@ -49,7 +51,7 @@ public class ItemController {
 
     @GetMapping("/search")
     @Operation(summary = "Search items by text in name or description")
-    public List<ItemDto> getAllByText(@RequestParam String text) {
+    public List<ItemDto> getAllByText(@RequestParam(name = "text") String text) {
         return service.getAllByText(text);
     }
 
@@ -57,5 +59,14 @@ public class ItemController {
     @Operation(summary = "Search all items for certain user")
     public List<ItemDto> getAll(@RequestHeader("X-Sharer-User-Id") long userId) {
         return service.getAll(userId);
+    }
+
+    @PostMapping("/{itemId}/comment")
+    @Operation(summary = "Add comment")
+    public CommentDto addComment(
+            @RequestHeader("X-Sharer-User-Id") long userId,
+            @RequestBody Comment comment,
+            @PathVariable long itemId) {
+        return service.addComment(userId, itemId, comment);
     }
 }
