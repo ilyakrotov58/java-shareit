@@ -1,16 +1,12 @@
 create sequence if not exists "Item_id_seq"
     as integer;
 
-alter sequence "Item_id_seq" owner to "ShareIt";
-
 create sequence if not exists user_id_seq
     as integer;
 
-alter sequence user_id_seq owner to "ShareIt";
-
 create table if not exists users
 (
-    id        integer not null
+    id        integer default nextval('user_id_seq'::regclass) not null
         constraint user_pk
             primary key,
     email     varchar                                          not null,
@@ -31,7 +27,7 @@ create unique index if not exists user_id_uindex
 
 create table if not exists items
 (
-    id           integer not null
+    id           integer default nextval('"Item_id_seq"'::regclass) not null
         constraint item_pk
             primary key,
     item_name    varchar                                            not null,
