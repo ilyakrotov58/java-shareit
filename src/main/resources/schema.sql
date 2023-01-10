@@ -1,13 +1,3 @@
-create sequence if not exists "Item_id_seq"
-    as integer;
-
-alter sequence "Item_id_seq" owner to "ShareIt";
-
-create sequence if not exists user_id_seq
-    as integer;
-
-alter sequence user_id_seq owner to "ShareIt";
-
 create table if not exists users
 (
     id        integer default nextval('user_id_seq'::regclass) not null
@@ -20,8 +10,6 @@ create table if not exists users
 
 alter table users
     owner to "ShareIt";
-
-alter sequence user_id_seq owned by users.id;
 
 create unique index if not exists user_email_uindex
     on users (email);
@@ -45,8 +33,6 @@ create table if not exists items
 
 alter table items
     owner to "ShareIt";
-
-alter sequence "Item_id_seq" owned by items.id;
 
 create unique index if not exists item_id_uindex
     on items (id);
