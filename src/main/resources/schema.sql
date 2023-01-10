@@ -1,8 +1,12 @@
 create sequence if not exists "Item_id_seq"
     as integer;
 
+alter sequence "Item_id_seq" owner to "ShareIt";
+
 create sequence if not exists user_id_seq
     as integer;
+
+alter sequence user_id_seq owner to "ShareIt";
 
 create table if not exists users
 (
