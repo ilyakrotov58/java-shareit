@@ -1,7 +1,6 @@
 package ru.practicum.shareit.exceptionHandlers;
 
 import lombok.extern.slf4j.Slf4j;
-import org.postgresql.util.PSQLException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -42,12 +41,6 @@ public class ExceptionHandlers {
     public ResponseEntity<String> handleValidateException(final ValidateException e) {
         log.error("400 {}", e.getLocalizedMessage());
         return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
-    }
-
-    @ExceptionHandler
-    public ResponseEntity<String> handlePSQLException(final PSQLException e) {
-        log.error("500 {}", e.getLocalizedMessage());
-        return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler
