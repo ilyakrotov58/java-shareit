@@ -7,18 +7,32 @@ public class BookingDtoMapper {
     public static BookingDto toDto(Booking booking) {
         return new BookingDto(
                 booking.getId(),
-                booking.getOwnerId(),
-                booking.getRequestUserId(),
-                booking.isConfirmed()
+                booking.getBooker().getId(),
+                booking.getStart(),
+                booking.getEnd(),
+                booking.getItem().getId()
         );
     }
 
     public static Booking fromDto(BookingDto bookingDto) {
         return new Booking(
-                bookingDto.getId(),
-                bookingDto.getOwnerId(),
-                bookingDto.getRequestUserId(),
-                bookingDto.isConfirmed()
+                0,
+                null,
+                null,
+                bookingDto.getStart(),
+                bookingDto.getEnd(),
+                null
         );
+    }
+
+    public static BookingDtoExt toExtDto(Booking booking) {
+        return new BookingDtoExt(
+                booking.getId(),
+                booking.getBooker(),
+                booking.getItem(),
+                booking.getStart(),
+                booking.getEnd(),
+                booking.getStatus(),
+                booking.getItem().getId());
     }
 }

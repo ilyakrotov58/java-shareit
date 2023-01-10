@@ -10,8 +10,10 @@ public class ItemDtoMapper {
                 item.getUserId(),
                 item.getName(),
                 item.getDescription(),
-                item.getAvailable()
-        );
+                item.getAvailable(),
+                null,
+                null,
+                item.getComments());
     }
 
     public static Item fromDto(ItemDto itemDto) {
@@ -20,7 +22,7 @@ public class ItemDtoMapper {
                 itemDto.getUserId(),
                 itemDto.getName(),
                 itemDto.getDescription(),
-                itemDto.getAvailable()
-        );
+                itemDto.getAvailable(),
+                itemDto.getComments());
     }
 }
