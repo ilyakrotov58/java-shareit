@@ -151,7 +151,8 @@ public class BookingService implements IBookingService {
         } else if (convertedStatus == BookingStatus.CURRENT) {
             result = allBookings
                     .stream()
-                    .filter(bookingDto -> bookingDto.getStatus() == BookingStatus.CURRENT)
+                    .filter(bookingDto -> bookingDto.getStart().isBefore(LocalDateTime.now())
+                    && bookingDto.getEnd().isAfter(LocalDateTime.now()))
                     .map(BookingDtoMapper::toExtDto)
                     .collect(Collectors.toCollection(ArrayList::new));
         } else if (convertedStatus == BookingStatus.FUTURE) {

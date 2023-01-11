@@ -1,5 +1,6 @@
 package ru.practicum.shareit.item.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -33,5 +34,6 @@ public class Item {
 
     @OneToMany
     @JoinColumn(name = "item_id", referencedColumnName = "id")
+    @JsonIgnore
     private List<Comment> comments = new ArrayList<>();
 }

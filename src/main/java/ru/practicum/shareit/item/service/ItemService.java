@@ -163,7 +163,9 @@ public class ItemService implements IItemService {
             throw new ValidateException("Text can't be empty");
         }
 
-        if (bookingRepository.getAllByItemId(itemId)
+        var allBookingByItemId = bookingRepository.getAllByItemId(itemId);
+
+        if (allBookingByItemId
                 .stream()
                 .noneMatch(booking -> booking.getStatus() != BookingStatus.WAITING
                         && booking.getStatus() != BookingStatus.REJECTED
@@ -171,6 +173,17 @@ public class ItemService implements IItemService {
             throw new ValidateException("Can't add comment for item without bookings");
         }
 
+        var isAllBookingsWithFutureStatus = allBookingByItemId
+                .stream()
+                .filter(booking -> booking.getItem().getId() == itemId
+                        && booking.getBooker().getId() == userId)
+                .collect(Collectors.toList());
+
+        if (isAllBookingsWithFutureStatus
+                .stream()
+                .allMatch(booking -> booking.getStart().isAfter(comment.getCreatedAt()))) {
+            throw new ValidateException("Can't add comment for future bookings");
+        }
 
         var returnedComment = commentRepository.save(comment);
         return CommentDtoMapper.toDto(returnedComment);

@@ -36,5 +36,5 @@ public class ItemDto {
     @Nullable
     private BookingDto nextBooking;
 
-    private List<Comment> comments;
+    private List<CommentDto> comments;
 }
