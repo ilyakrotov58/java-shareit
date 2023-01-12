@@ -9,8 +9,7 @@ public class UserDtoMapper {
                 user.getId(),
                 user.getEmail(),
                 user.getName(),
-                user.getLastName(),
-                user.getReviews());
+                user.getLastName());
     }
 
     public static User fromDto(UserDto userDto) {
@@ -18,8 +17,6 @@ public class UserDtoMapper {
                 userDto.getId(),
                 userDto.getEmail(),
                 userDto.getName(),
-                userDto.getLastName(),
-                userDto.getReviews()
-        );
+                userDto.getLastName());
     }
 }

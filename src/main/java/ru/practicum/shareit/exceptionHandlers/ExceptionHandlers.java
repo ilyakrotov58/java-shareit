@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import ru.practicum.shareit.exceptions.*;
 
+import javax.validation.ConstraintViolationException;
+
 @RestControllerAdvice
 @Slf4j
 public class ExceptionHandlers {
@@ -37,13 +39,19 @@ public class ExceptionHandlers {
 
     @ExceptionHandler
     public ResponseEntity<String> handleValidateException(final ValidateException e) {
+        log.error("400 {}", e.getLocalizedMessage());
+        return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<String> handleConstraintViolationException(final ConstraintViolationException e) {
         log.error("500 {}", e.getLocalizedMessage());
         return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler
-    public ResponseEntity<String> handleThrowableException(final Throwable e) {
-        log.error("400 {}", e.getLocalizedMessage());
-        return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
+    public ResponseEntity<String> handlerUnsupportedBookingStatusException(final UnsupportedBookingStatusException e) {
+        log.error("500 {}", e.getLocalizedMessage());
+        return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

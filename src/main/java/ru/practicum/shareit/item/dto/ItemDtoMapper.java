@@ -1,17 +1,36 @@
 package ru.practicum.shareit.item.dto;
 
+import ru.practicum.shareit.item.model.Comment;
 import ru.practicum.shareit.item.model.Item;
+
+import java.util.ArrayList;
 
 public class ItemDtoMapper {
 
     public static ItemDto toDto(Item item) {
+        var comments = item.getComments();
+        var itemDtoComments = new ArrayList<ItemDto.Comment>();
+
+        for (Comment comment : comments) {
+            var itemDtoComment = new ItemDto.Comment(
+                    comment.getId(),
+                    comment.getText(),
+                    comment.getAuthor().getName(),
+                    comment.getCreatedAt()
+            );
+
+            itemDtoComments.add(itemDtoComment);
+        }
+
         return new ItemDto(
                 item.getId(),
                 item.getUserId(),
                 item.getName(),
                 item.getDescription(),
-                item.getAvailable()
-        );
+                item.getAvailable(),
+                null,
+                null,
+                itemDtoComments);
     }
 
     public static Item fromDto(ItemDto itemDto) {
@@ -20,7 +39,7 @@ public class ItemDtoMapper {
                 itemDto.getUserId(),
                 itemDto.getName(),
                 itemDto.getDescription(),
-                itemDto.getAvailable()
-        );
+                itemDto.getAvailable(),
+                new ArrayList<>());
     }
 }
