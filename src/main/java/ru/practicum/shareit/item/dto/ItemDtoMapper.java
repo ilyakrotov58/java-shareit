@@ -11,7 +11,7 @@ public class ItemDtoMapper {
         var comments = item.getComments();
         var itemDtoComments = new ArrayList<ItemDto.Comment>();
 
-        for(Comment comment : comments) {
+        for (Comment comment : comments) {
             var itemDtoComment = new ItemDto.Comment(
                     comment.getId(),
                     comment.getText(),

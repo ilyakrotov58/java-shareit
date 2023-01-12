@@ -217,7 +217,7 @@ public class ItemService implements IItemService {
 
             var filteredBookingsItemDto = new ArrayList<ItemDto.Booking>();
 
-            for(BookingDto bookingDto : filteredBookings) {
+            for (BookingDto bookingDto : filteredBookings) {
                 var bookingItemDto = new ItemDto.Booking(
                         bookingDto.getId(),
                         bookingDto.getBookerId(),
