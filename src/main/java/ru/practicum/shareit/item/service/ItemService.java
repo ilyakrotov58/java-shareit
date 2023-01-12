@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.practicum.shareit.booking.dto.BookingDto;
 import ru.practicum.shareit.booking.dto.BookingDtoMapper;
 import ru.practicum.shareit.booking.model.Booking;
 import ru.practicum.shareit.booking.model.BookingStatus;
@@ -15,7 +16,6 @@ import ru.practicum.shareit.item.dto.CommentDto;
 import ru.practicum.shareit.item.dto.CommentDtoMapper;
 import ru.practicum.shareit.item.dto.ItemDto;
 import ru.practicum.shareit.item.dto.ItemDtoMapper;
-import ru.practicum.shareit.item.model.Comment;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.item.repository.ICommentRepository;
 import ru.practicum.shareit.item.repository.IItemRepository;
@@ -151,12 +151,16 @@ public class ItemService implements IItemService {
     }
 
     @Override
-    public CommentDto addComment(long userId, long itemId, Comment comment) {
+    public CommentDto addComment(long userId, long itemId, CommentDto commentDto) {
+
 
         checkIfUserExists(userId);
         checkIfItemExists(itemId);
-        comment.setItem(itemRepository.getReferenceById(itemId));
-        comment.setAuthor(userRepository.getReferenceById(userId));
+
+        var user = userRepository.getReferenceById(userId);
+        var item = itemRepository.getReferenceById(itemId);
+
+        var comment = CommentDtoMapper.fromDto(commentDto, user, item);
         comment.setCreatedAt(LocalDateTime.now());
 
         if (comment.getText().isEmpty()) {
@@ -185,8 +189,7 @@ public class ItemService implements IItemService {
             throw new ValidateException("Can't add comment for future bookings");
         }
 
-        var returnedComment = commentRepository.save(comment);
-        return CommentDtoMapper.toDto(returnedComment);
+        return CommentDtoMapper.toDto(commentRepository.save(comment));
     }
 
     private void checkIfUserExists(long userId) {
@@ -212,11 +215,25 @@ public class ItemService implements IItemService {
                     .map(BookingDtoMapper::toDto)
                     .collect(Collectors.toList());
 
+            var filteredBookingsItemDto = new ArrayList<ItemDto.Booking>();
+
+            for(BookingDto bookingDto : filteredBookings) {
+                var bookingItemDto = new ItemDto.Booking(
+                        bookingDto.getId(),
+                        bookingDto.getBookerId(),
+                        bookingDto.getStart(),
+                        bookingDto.getEnd(),
+                        bookingDto.getItemId()
+                );
+
+                filteredBookingsItemDto.add(bookingItemDto);
+            }
+
             if (filteredBookings.size() > 1) {
-                itemDto.setLastBooking(filteredBookings.get(filteredBookings.size() - 1));
-                itemDto.setNextBooking(filteredBookings.get(filteredBookings.size() - 2));
+                itemDto.setLastBooking(filteredBookingsItemDto.get(filteredBookings.size() - 1));
+                itemDto.setNextBooking(filteredBookingsItemDto.get(filteredBookings.size() - 2));
             } else if (filteredBookings.size() == 1) {
-                itemDto.setNextBooking(filteredBookings.get(0));
+                itemDto.setNextBooking(filteredBookingsItemDto.get(0));
             }
         }
     }

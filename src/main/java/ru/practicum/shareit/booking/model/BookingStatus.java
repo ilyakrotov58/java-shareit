@@ -12,7 +12,6 @@ public enum BookingStatus {
     public static void isValid(String status) {
         var result = getAll().stream().map(Enum::toString).anyMatch(b -> b.equals(status));
 
-
         if (!result) {
             throw new UnsupportedBookingStatusException("{\"error\":\"Unknown state: " + status + "\"}");
         }

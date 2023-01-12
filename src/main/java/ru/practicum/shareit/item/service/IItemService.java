@@ -33,5 +33,5 @@ public interface IItemService {
     CommentDto addComment(
             @RequestHeader("X-Sharer-User-Id") long userId,
             @PathVariable long itemId,
-            @RequestBody Comment comment);
+            @RequestBody CommentDto comment);
 }

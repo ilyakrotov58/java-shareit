@@ -26,10 +26,28 @@ public class BookingDtoMapper {
     }
 
     public static BookingDtoExt toExtDto(Booking booking) {
+
+        var bookingDtoExtUser = new BookingDtoExt.User(
+                booking.getBooker().getId(),
+                booking.getBooker().getEmail(),
+                booking.getBooker().getName(),
+                booking.getBooker().getLastName()
+        );
+
+        var bookingDtoExtItem = new BookingDtoExt.Item(
+                booking.getItem().getId(),
+                booking.getItem().getUserId(),
+                booking.getItem().getName(),
+                booking.getItem().getDescription(),
+                booking.getItem().getAvailable(),
+                null,
+                null,
+                null);
+
         return new BookingDtoExt(
                 booking.getId(),
-                booking.getBooker(),
-                booking.getItem(),
+                bookingDtoExtUser,
+                bookingDtoExtItem,
                 booking.getStart(),
                 booking.getEnd(),
                 booking.getStatus(),
