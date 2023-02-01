@@ -92,7 +92,7 @@ public class GetItemByIdTests {
     }
 
     @Test
-    void GetItemById_WithNotExistingUser_ShouldThrowException() {
+    void getItemById_WithNotExistingUser_ShouldThrowException() {
 
         // Arrange
         var item = EntityGenerator.createItem();
@@ -118,7 +118,7 @@ public class GetItemByIdTests {
     }
 
     @Test
-    void GetItemById_WithNotExistingId_ShouldThrowException() {
+    void getItemById_WithNotExistingId_ShouldThrowException() {
 
         // Arrange
         var user = EntityGenerator.createUser();

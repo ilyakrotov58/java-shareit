@@ -51,7 +51,7 @@ public class AddCommentTests {
     }
 
     @Test
-    void AddComment_WithCorrectParams_ReturnsCorrectResponse() {
+    void addComment_WithCorrectParams_ReturnsCorrectResponse() {
 
         // Arrange
         var item = EntityGenerator.createItem();
@@ -93,7 +93,7 @@ public class AddCommentTests {
     }
 
     @Test
-    void AddComment_WithNotExistingUser_ShouldThrowException() {
+    void addComment_WithNotExistingUser_ShouldThrowException() {
 
         // Arrange
         var item = EntityGenerator.createItem();
@@ -134,7 +134,7 @@ public class AddCommentTests {
     }
 
     @Test
-    void AddComment_WithNotExistingItem_ShouldThrowException() {
+    void addComment_WithNotExistingItem_ShouldThrowException() {
 
         // Arrange
         var comment = EntityGenerator.createComment();
@@ -175,7 +175,7 @@ public class AddCommentTests {
     }
 
     @Test
-    void AddComment_WithEmptyText_ShouldThrowException() {
+    void addComment_WithEmptyText_ShouldThrowException() {
 
         // Arrange
         var comment = EntityGenerator.createComment();
@@ -223,7 +223,7 @@ public class AddCommentTests {
     }
 
     @Test
-    void AddComment_WhenItemHasNotBookings_ShouldThrowException() {
+    void addComment_WhenItemHasNotBookings_ShouldThrowException() {
 
         // Arrange
         var comment = EntityGenerator.createComment();
@@ -265,7 +265,7 @@ public class AddCommentTests {
     }
 
     @Test
-    void AddComment_WithFutureBooking_ShouldThrowException() {
+    void addComment_WithFutureBooking_ShouldThrowException() {
 
         // Arrange
         var comment = EntityGenerator.createComment();

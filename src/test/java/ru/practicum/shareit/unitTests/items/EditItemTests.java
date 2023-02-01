@@ -40,7 +40,7 @@ public class EditItemTests {
     }
 
     @Test
-    void EditItem_WithCorrectParams_ReturnsCorrectResponse() {
+    void editItem_WithCorrectParams_ReturnsCorrectResponse() {
 
         // Arrange
         var item = EntityGenerator.createItem();
@@ -78,7 +78,7 @@ public class EditItemTests {
     }
 
     @Test
-    void EditItem_WithNotExistingUser_ShouldThrowException() {
+    void editItem_WithNotExistingUser_ShouldThrowException() {
 
         // Arrange
         var itemDto = ItemDtoMapper.toDto(EntityGenerator.createItem());
@@ -100,7 +100,7 @@ public class EditItemTests {
     }
 
     @Test
-    void EditItem_WithNotExistingItem_ShouldThrowException() {
+    void editItem_WithNotExistingItem_ShouldThrowException() {
 
         // Arrange
         var user = EntityGenerator.createUser();
@@ -127,7 +127,7 @@ public class EditItemTests {
     }
 
     @Test
-    void EditItem_WhenUserIsNotOwner_ShouldThrowException() {
+    void editItem_WhenUserIsNotOwner_ShouldThrowException() {
 
         // Arrange
         var user = EntityGenerator.createUser();

@@ -18,7 +18,7 @@ public class UsersJsonTests {
     private JacksonTester<UserDto> json;
 
     @Test
-    void testItemDto() throws Exception {
+    void testUserDto() throws Exception {
 
         // Arrange
         var userDto = UserDtoMapper.toDto(EntityGenerator.createUser());

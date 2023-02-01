@@ -37,7 +37,7 @@ public class DeleteItemTests {
     }
 
     @Test
-    void DeleteItem_WithNotExistingUser_ShouldThrowException() {
+    void deleteItem_WithNotExistingUser_ShouldThrowException() {
 
         // Arrange
         var item = EntityGenerator.createItem();
@@ -64,7 +64,7 @@ public class DeleteItemTests {
     }
 
     @Test
-    void DeleteItem_WithNotExistingId_ShouldThrowException() {
+    void deleteItem_WithNotExistingId_ShouldThrowException() {
 
         // Arrange
         var user = EntityGenerator.createUser();

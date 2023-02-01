@@ -39,7 +39,7 @@ public class AddItemTests {
     }
 
     @Test
-    void AddItem_WithCorrectParams_ReturnsCorrectResponse() {
+    void addItem_WithCorrectParams_ReturnsCorrectResponse() {
 
         // Arrange
         var item = EntityGenerator.createItem();
@@ -72,7 +72,7 @@ public class AddItemTests {
     }
 
     @Test
-    void AddItem_WithNotExistingUser_ShouldThrowException() {
+    void addItem_WithNotExistingUser_ShouldThrowException() {
 
         // Arrange
         var itemDto = ItemDtoMapper.toDto(EntityGenerator.createItem());

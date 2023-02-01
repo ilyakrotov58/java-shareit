@@ -18,7 +18,7 @@ public class RequestsJsonTests {
     private JacksonTester<ItemRequestDto> json;
 
     @Test
-    void testItemDto() throws Exception {
+    void testRequestDto() throws Exception {
 
         // Arrange
         var requestDto = ItemRequestDtoMapper.toDto(EntityGenerator.createRequest());

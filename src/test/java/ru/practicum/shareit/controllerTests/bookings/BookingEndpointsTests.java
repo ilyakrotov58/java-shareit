@@ -51,7 +51,7 @@ public class BookingEndpointsTests {
     }
 
     @Test
-    void AddBooking_WithCorrectParams_ReturnsCorrectResponse() throws Exception {
+    void addBooking_WithCorrectParams_ReturnsCorrectResponse() throws Exception {
 
         // Arrange
         var user = EntityGenerator.createUser();
@@ -136,7 +136,7 @@ public class BookingEndpointsTests {
     }
 
     @Test
-    void GetBooking_WithCorrectParams_ReturnsCorrectResponse() throws Exception {
+    void getBooking_WithCorrectParams_ReturnsCorrectResponse() throws Exception {
 
         // Arrange
         var user = EntityGenerator.createUser();
@@ -177,7 +177,7 @@ public class BookingEndpointsTests {
     }
 
     @Test
-    void GetAllBookings_WithCorrectParams_ReturnsCorrectResponse() throws Exception {
+    void getAllBookings_WithCorrectParams_ReturnsCorrectResponse() throws Exception {
 
         // Arrange
         var user = EntityGenerator.createUser();
@@ -227,7 +227,7 @@ public class BookingEndpointsTests {
     }
 
     @Test
-    void GetAllBookingsByItems_WithCorrectParams_ReturnsCorrectResponse() throws Exception {
+    void getAllBookingsByItems_WithCorrectParams_ReturnsCorrectResponse() throws Exception {
 
         // Arrange
         var user = EntityGenerator.createUser();
