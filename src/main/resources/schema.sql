@@ -1,6 +1,8 @@
-create sequence if not exists "item_id_seq" as integer;
+create sequence if not exists item_id_seq as integer;
 
 create sequence if not exists user_id_seq as integer;
+
+create sequence if not exists request_id_seq as integer;
 
 create table if not exists users
 (
@@ -18,7 +20,9 @@ create unique index if not exists user_id_uindex on users (id);
 
 create table if not exists requests
 (
-    id          bigserial,
+    id           integer default nextval('request_id_seq') not null
+        constraint request_pk
+            primary key,
     description varchar(50) not null,
     created     timestamp,
     user_id     integer     not null
@@ -41,19 +45,15 @@ create table if not exists items
             on update cascade on delete cascade,
     request_id   integer
         constraint items_requests_id_fk
-            references requests (id)
+            references requests
             on update cascade on delete cascade
-
-
 );
 
 create unique index if not exists item_id_uindex on items (id);
 
 create table if not exists bookings
 (
-    id             serial
-        constraint bookings_pk
-            primary key,
+    id bigint constraint bookings_pk primary key,
     booker_id      integer     not null
         constraint bookings_users_id_fk
             references users
@@ -71,7 +71,7 @@ create unique index if not exists bookings_id_uindex on bookings (id);
 
 create table if not exists comments
 (
-    id         serial
+    id         bigint
         constraint comments_pk
             primary key,
     text       text    not null,

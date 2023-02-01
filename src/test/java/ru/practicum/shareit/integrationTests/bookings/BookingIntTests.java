@@ -83,8 +83,8 @@ public class BookingIntTests {
     @AfterEach
     void clearDb() {
         commentRepository.deleteAll();
-        itemRepository.deleteAll();
         bookingRepository.deleteAll();
+        itemRepository.deleteAll();
         userRepository.deleteAll();
     }
 }
