@@ -32,6 +32,9 @@ public class Item {
     @Column(name = "availability")
     private Boolean available;
 
+    @Column(name = "request_id")
+    private Long requestId;
+
     @OneToMany
     @JoinColumn(name = "item_id", referencedColumnName = "id")
     @JsonIgnore

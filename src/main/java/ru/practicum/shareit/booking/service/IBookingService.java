@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.practicum.shareit.booking.dto.BookingDto;
 import ru.practicum.shareit.booking.dto.BookingDtoExt;
-import ru.practicum.shareit.booking.model.Booking;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -25,10 +24,13 @@ public interface IBookingService {
                       @RequestHeader("X-Sharer-User-Id") long userId);
 
     List<BookingDtoExt> getAllBookings(@RequestParam String state,
-                                       @RequestHeader("X-Sharer-User-Id") long userId);
+                                       @RequestHeader("X-Sharer-User-Id") long userId,
+                                       @RequestParam(defaultValue = "0") long index,
+                                       @RequestParam(defaultValue = "10") long size);
+
 
     List<BookingDtoExt> getAllBookingsByItems(@RequestParam String state,
-                                              @RequestHeader("X-Sharer-User-Id") long userId);
-
-    List<Booking> getAllByItemId(long itemId);
+                                              @RequestHeader("X-Sharer-User-Id") long userId,
+                                              @RequestParam(defaultValue = "0") long index,
+                                              @RequestParam(defaultValue = "10") long size);
 }

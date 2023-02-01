@@ -48,9 +48,7 @@ public class UserService implements IUserService {
     @Transactional
     public UserDto editById(UserDto userDto, long userId) {
 
-        if (userRepository.findById(userId).isEmpty()) {
-            throw new NotFoundException(String.format("User with id = %s can't be found", userId));
-        }
+        checkIfUserExists(userId);
 
         userDto.setId(userId);
         var oldUser = userRepository.findById(userId).get();
@@ -70,11 +68,9 @@ public class UserService implements IUserService {
     @Override
     public UserDto getById(long userId) {
 
-        var user = userRepository.findById(userId);
+        checkIfUserExists(userId);
 
-        if (user.isEmpty()) {
-            throw new NotFoundException(String.format("User with id = %s can't be found", userId));
-        }
+        var user = userRepository.findById(userId);
 
         return UserDtoMapper.toDto(user.get());
     }
@@ -82,14 +78,19 @@ public class UserService implements IUserService {
     @Override
     @Transactional
     public void deleteById(long userId) {
+
+        checkIfUserExists(userId);
+
+        userRepository.deleteById(userId);
+
+        log.info(String.format("User with id=%s was deleted", userId));
+    }
+
+    private void checkIfUserExists(long userId) {
         var user = userRepository.findById(userId);
 
         if (user.isEmpty()) {
             throw new NotFoundException(String.format("User with id = %s can't be found", userId));
         }
-
-        userRepository.deleteById(userId);
-
-        log.info(String.format("User with id=%s was deleted", userId));
     }
 }

@@ -50,14 +50,18 @@ public class ItemController {
 
     @GetMapping("/search")
     @Operation(summary = "Search items by text in name or description")
-    public List<ItemDto> getAllByText(@RequestParam(name = "text") String text) {
-        return service.getAllByText(text);
+    public List<ItemDto> getAllByText(@RequestParam(name = "text") String text,
+                                      @RequestParam(defaultValue = "0") long index,
+                                      @RequestParam(defaultValue = "10") long size) {
+        return service.getAllByText(text, index, size);
     }
 
     @GetMapping
     @Operation(summary = "Search all items for certain user")
-    public List<ItemDto> getAll(@RequestHeader("X-Sharer-User-Id") long userId) {
-        return service.getAll(userId);
+    public List<ItemDto> getAll(@RequestHeader("X-Sharer-User-Id") long userId,
+                                @RequestParam(defaultValue = "0") long index,
+                                @RequestParam(defaultValue = "10") long size) {
+        return service.getAll(userId, index, size);
     }
 
     @PostMapping("/{itemId}/comment")

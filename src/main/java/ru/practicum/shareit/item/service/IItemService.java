@@ -25,9 +25,14 @@ public interface IItemService {
     void deleteById(@PathVariable long itemId,
                     @RequestHeader("X-Sharer-User-Id") long userId);
 
-    List<ItemDto> getAllByText(@RequestParam(required = false) String text);
+    List<ItemDto> getAllByText(@RequestParam(required = false) String text,
+                               @RequestParam(defaultValue = "0") long index,
+                               @RequestParam(defaultValue = "10") long size);
 
-    List<ItemDto> getAll(@RequestHeader("X-Sharer-User-Id") long userId);
+    List<ItemDto> getAll(@RequestHeader("X-Sharer-User-Id") long userId,
+                         @RequestParam(defaultValue = "0") long index,
+                         @RequestParam(defaultValue = "10") long size);
+
 
     CommentDto addComment(
             @RequestHeader("X-Sharer-User-Id") long userId,

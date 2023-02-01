@@ -85,6 +85,7 @@ public class BookingService implements IBookingService {
 
         if (approved && booking.get().getStatus() != BookingStatus.APPROVED) {
             booking.get().setStatus(BookingStatus.APPROVED);
+            bookingRepository.save(booking.get());
         } else if (approved && booking.get().getStatus() == BookingStatus.APPROVED) {
             throw new ValidateException("Status of booking is already APPROVED");
         } else {
@@ -110,32 +111,41 @@ public class BookingService implements IBookingService {
     }
 
     @Override
-    public List<BookingDtoExt> getAllBookings(String state, long userId) {
+    public List<BookingDtoExt> getAllBookings(String state, long userId, long index, long size) {
 
+        checkIndex(index);
+        checkSize(size);
         checkIfUserExists(userId);
         BookingStatus.isValid(state);
+
         var convertedStatus = BookingStatus.valueOf(state);
         var userBookings = bookingRepository.getAll(userId);
 
-        return getBookingsByState(userBookings, convertedStatus);
+        return getBookingsByState(userBookings, convertedStatus)
+                .stream()
+                .skip(index)
+                .limit(size)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public List<BookingDtoExt> getAllBookingsByItems(String state, long userId) {
+    public List<BookingDtoExt> getAllBookingsByItems(String state, long userId, long index, long size) {
 
+        checkIndex(index);
+        checkSize(size);
         checkIfUserExists(userId);
         BookingStatus.isValid(state);
+
         var convertedStatus = BookingStatus.valueOf(state);
 
         var allBookings = bookingRepository.getAllItemsBookings(userId);
 
 
-        return getBookingsByState(allBookings, convertedStatus);
-    }
-
-    @Override
-    public List<Booking> getAllByItemId(long itemId) {
-        return bookingRepository.getAllByItemId(itemId);
+        return getBookingsByState(allBookings, convertedStatus)
+                .stream()
+                .skip(index)
+                .limit(size)
+                .collect(Collectors.toList());
     }
 
     private List<BookingDtoExt> getBookingsByState(List<Booking> allBookings, BookingStatus convertedStatus) {
@@ -152,7 +162,7 @@ public class BookingService implements IBookingService {
             result = allBookings
                     .stream()
                     .filter(bookingDto -> bookingDto.getStart().isBefore(LocalDateTime.now())
-                    && bookingDto.getEnd().isAfter(LocalDateTime.now()))
+                            && bookingDto.getEnd().isAfter(LocalDateTime.now()))
                     .map(BookingDtoMapper::toExtDto)
                     .collect(Collectors.toCollection(ArrayList::new));
         } else if (convertedStatus == BookingStatus.FUTURE) {
@@ -194,4 +204,17 @@ public class BookingService implements IBookingService {
             throw new ValidateException("Start date can't be after end date");
         }
     }
+
+    private void checkSize(long size) {
+        if (size < 1) {
+            throw new ValidateException("Size should be > 0");
+        }
+    }
+
+    private void checkIndex(long index) {
+        if (index < 0) {
+            throw new ValidateException("Index should be >= 0");
+        }
+    }
+
 }

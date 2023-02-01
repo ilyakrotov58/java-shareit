@@ -7,18 +7,18 @@ public class ItemRequestDtoMapper {
     public static ItemRequestDto toDto(ItemRequest itemRequest) {
         return new ItemRequestDto(
                 itemRequest.getId(),
+                itemRequest.getDescription(),
                 itemRequest.getUserId(),
-                itemRequest.getItemName(),
-                itemRequest.getItemDescription()
-        );
+                itemRequest.getCreated(),
+                itemRequest.getItems());
     }
 
     public static ItemRequest fromDto(ItemRequestDto itemRequestDto) {
         return new ItemRequest(
                 itemRequestDto.getId(),
+                itemRequestDto.getDescription(),
+                itemRequestDto.getCreated(),
                 itemRequestDto.getUserId(),
-                itemRequestDto.getItemName(),
-                itemRequestDto.getItemDescription()
-        );
+                itemRequestDto.getItems());
     }
 }
