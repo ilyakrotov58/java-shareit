@@ -11,6 +11,7 @@ import ru.practicum.shareit.booking.repository.IBookingRepository;
 import ru.practicum.shareit.exceptions.NotFoundException;
 import ru.practicum.shareit.item.dto.ItemDto;
 import ru.practicum.shareit.item.dto.ItemDtoMapper;
+import ru.practicum.shareit.item.model.Comment;
 import ru.practicum.shareit.item.repository.IItemRepository;
 import ru.practicum.shareit.item.service.IItemService;
 import ru.practicum.shareit.item.service.ItemService;
@@ -48,6 +49,10 @@ public class GetItemByIdTests {
 
         // Arrange
         var item = EntityGenerator.createItem();
+        var comment = EntityGenerator.createComment();
+        var commentList = new ArrayList<Comment>();
+        commentList.add(comment);
+        item.setComments(commentList);
         var user = EntityGenerator.createUser();
         var booking = EntityGenerator.createBooking();
 
@@ -88,7 +93,7 @@ public class GetItemByIdTests {
                 .hasFieldOrPropertyWithValue("lastBooking", null)
                 .hasFieldOrPropertyWithValue("nextBooking", itemDto.getNextBooking())
                 .hasFieldOrPropertyWithValue("requestId", itemDto.getRequestId())
-                .hasFieldOrPropertyWithValue("comments", new ArrayList<>());
+                .hasFieldOrPropertyWithValue("comments", itemDto.getComments());
     }
 
     @Test
