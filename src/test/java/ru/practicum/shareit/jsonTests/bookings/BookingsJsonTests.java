@@ -10,6 +10,8 @@ import ru.practicum.shareit.booking.dto.BookingDtoExt;
 import ru.practicum.shareit.booking.dto.BookingDtoMapper;
 import ru.practicum.shareit.utils.EntityGenerator;
 
+import java.util.ArrayList;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @JsonTest
@@ -44,7 +46,18 @@ public class BookingsJsonTests {
     void testBookingDtoExt() throws Exception {
 
         // Arrange
-        var bookingDtoExt = BookingDtoMapper.toExtDto(EntityGenerator.createBooking());
+        var booking = EntityGenerator.createBooking();
+        var comment = EntityGenerator.createComment();
+        var commentList = new ArrayList<BookingDtoExt.Item.Comment>();
+        commentList.add(new BookingDtoExt.Item.Comment(
+                comment.getId(),
+                comment.getText(),
+                comment.getAuthor().getName(),
+                comment.getCreatedAt()
+        ));
+
+        var bookingDtoExt = BookingDtoMapper.toExtDto(booking);
+        bookingDtoExt.getItem().setComments(commentList);
 
         // Act
         JsonContent<BookingDtoExt> result = jsonBookingDtoExt.write(bookingDtoExt);
@@ -76,8 +89,15 @@ public class BookingsJsonTests {
                 .isEqualTo(bookingDtoExt.getItem().getLastBooking());
         assertThat(result).extractingJsonPathValue("$.item.nextBooking")
                 .isEqualTo(bookingDtoExt.getItem().getNextBooking());
-        assertThat(result).extractingJsonPathValue("$.item.comments")
-                .isEqualTo(bookingDtoExt.getItem().getComments());
+
+        var commentInBooking = bookingDtoExt.getItem().getComments().get(0);
+
+        assertThat(result).extractingJsonPathNumberValue("$.item.comments[0].id")
+                .isEqualTo((int)commentInBooking.getId());
+        assertThat(result).extractingJsonPathStringValue("$.item.comments[0].text")
+                .isEqualTo(commentInBooking.getText());
+        assertThat(result).extractingJsonPathStringValue("$.item.comments[0].authorName")
+                .isEqualTo(commentInBooking.getAuthorName());
 
         assertThat(result).extractingJsonPathStringValue("$.status")
                 .contains(bookingDtoExt.getStatus().toString());

@@ -60,7 +60,7 @@ public class BookingDtoExt {
 
         @Data
         @AllArgsConstructor
-        private static class Comment {
+        public static class Comment {
 
             @NotNull
             private long id;
