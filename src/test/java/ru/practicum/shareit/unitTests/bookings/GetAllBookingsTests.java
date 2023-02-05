@@ -19,6 +19,7 @@ import ru.practicum.shareit.item.repository.IItemRepository;
 import ru.practicum.shareit.user.repository.IUserRepository;
 import ru.practicum.shareit.utils.EntityGenerator;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -68,6 +69,69 @@ public class GetAllBookingsTests {
         // Act
         var actualListOfBookings = bookingService.getAllBookings(
                 bookingStatus,
+                0,
+                0,
+                1);
+
+        // Assert
+        Assertions.assertEquals(expectedListOfBookings, actualListOfBookings);
+    }
+
+    @Test
+    void getAllBookings_WithPastStatus_ReturnsCorrectResponse() {
+
+        // Arrange
+        var booking = setUpBooking();
+        booking.setStatus(BookingStatus.PAST);
+        booking.setEnd(LocalDateTime.now().minusDays(2));
+
+        var bookingDtoExt = BookingDtoMapper.toExtDto(booking);
+
+        var listOfBookings = new ArrayList<Booking>();
+        listOfBookings.add(booking);
+
+        var expectedListOfBookings = new ArrayList<BookingDtoExt>();
+        expectedListOfBookings.add(bookingDtoExt);
+
+        Mockito
+                .when(bookingRepository.getAll(Mockito.anyLong()))
+                .thenReturn(listOfBookings);
+
+        // Act
+        var actualListOfBookings = bookingService.getAllBookings(
+                BookingStatus.PAST.toString(),
+                0,
+                0,
+                1);
+
+        // Assert
+        Assertions.assertEquals(expectedListOfBookings, actualListOfBookings);
+    }
+
+    @Test
+    void getAllBookings_WithCurrentStatus_ReturnsCorrectResponse() {
+
+        // Arrange
+        var booking = setUpBooking();
+        booking.setStatus(BookingStatus.CURRENT);
+        booking.setEnd(LocalDateTime.now().plusDays(2));
+        booking.setStart(LocalDateTime.now().minusDays(2));
+
+        var bookingDtoExt = BookingDtoMapper.toExtDto(booking);
+
+        var listOfBookings = new ArrayList<Booking>();
+        listOfBookings.add(booking);
+
+        var expectedListOfBookings = new ArrayList<BookingDtoExt>();
+        expectedListOfBookings.add(bookingDtoExt);
+
+        Mockito
+                .when(bookingRepository.getAll(Mockito.anyLong()))
+                .thenReturn(listOfBookings);
+
+        // Act
+        var actualListOfBookings = bookingService.getAllBookings(
+                BookingStatus.CURRENT.toString(),
                 0,
                 0,
                 1);
