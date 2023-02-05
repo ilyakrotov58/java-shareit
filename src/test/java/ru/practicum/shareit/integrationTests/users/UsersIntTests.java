@@ -53,7 +53,6 @@ public class UsersIntTests {
         var expectedUser = UserDtoMapper.toDto(newUser);
         expectedUser.setId(userInDb.getId());
 
-
         // Act
         var actualUser = userService.editById(expectedUser, userInDb.getId());
 

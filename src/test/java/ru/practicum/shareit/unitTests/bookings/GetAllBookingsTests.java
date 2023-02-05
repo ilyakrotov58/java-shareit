@@ -45,11 +45,14 @@ public class GetAllBookingsTests {
         ReflectionTestUtils.setField(bookingService, "bookingRepository", bookingRepository);
     }
 
-    @Test
-    void getAllBookings_WithCorrectParams_ReturnsCorrectResponse() {
+    @ParameterizedTest(name = "Get all bookings")
+    @ValueSource(strings = {"ALL", "FUTURE", "WAITING", "REJECTED", "APPROVED"})
+    void getAllBookings_WithCorrectParams_ReturnsCorrectResponse(String bookingStatus) {
 
         // Arrange
         var booking = setUpBooking();
+        booking.setStatus(BookingStatus.valueOf(bookingStatus));
+
         var bookingDtoExt = BookingDtoMapper.toExtDto(booking);
 
         var listOfBookings = new ArrayList<Booking>();
@@ -64,7 +67,7 @@ public class GetAllBookingsTests {
 
         // Act
         var actualListOfBookings = bookingService.getAllBookings(
-                BookingStatus.APPROVED.toString(),
+                bookingStatus,
                 0,
                 0,
                 1);
