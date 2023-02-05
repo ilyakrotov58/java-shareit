@@ -52,12 +52,10 @@ public class ItemRequestService implements IItemRequestService {
     public List<ItemRequestDto> get(long userId) {
 
         checkIfUserExists(userId);
+
         var itemsRequests = itemRequestRepository.getRequests(userId);
 
-        for (ItemRequest itemRequest : itemsRequests) {
-            var items = itemRepository.getItemsByRequestId(itemRequest.getId());
-            itemRequest.setItems(items);
-        }
+        setItemsToItemRequests(itemsRequests);
 
         return itemsRequests
                 .stream()
@@ -84,10 +82,7 @@ public class ItemRequestService implements IItemRequestService {
                 .limit(size)
                 .collect(Collectors.toList());
 
-        for (ItemRequest itemRequest : itemsRequestsOtherUsers) {
-            var items = itemRepository.getItemsByRequestId(itemRequest.getId());
-            itemRequest.setItems(items);
-        }
+        setItemsToItemRequests(itemsRequestsOtherUsers);
 
         return itemsRequestsOtherUsers
                 .stream()
@@ -117,6 +112,21 @@ public class ItemRequestService implements IItemRequestService {
 
         if (user.isEmpty()) {
             throw new NotFoundException(String.format("User with id %s can't be found", userId));
+        }
+    }
+
+    private void setItemsToItemRequests(List<ItemRequest> itemRequests) {
+
+        var items = itemRepository.findAll();
+
+        for (ItemRequest itemRequest : itemRequests) {
+            var itemsByRequest = items
+                    .stream()
+                    .filter(i -> i.getRequestId() != null)
+                    .filter(i -> i.getRequestId() == itemRequest.getId())
+                    .collect(Collectors.toList());
+
+            itemRequest.setItems(itemsByRequest);
         }
     }
 }

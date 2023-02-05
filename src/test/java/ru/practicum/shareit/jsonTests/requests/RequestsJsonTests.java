@@ -42,9 +42,6 @@ public class RequestsJsonTests {
         assertThat(result).extractingJsonPathNumberValue("$.items[0].id")
                 .isEqualTo((int) item.getId());
 
-        assertThat(result).extractingJsonPathNumberValue("$.items[0].userId")
-                .isEqualTo((int) item.getUserId());
-
         assertThat(result).extractingJsonPathStringValue("$.items[0].name")
                 .isEqualTo(item.getName());
 

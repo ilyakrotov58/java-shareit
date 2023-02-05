@@ -2,8 +2,7 @@ package ru.practicum.shareit.jpaTests.requests;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import ru.practicum.shareit.ShareItApp;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.item.repository.IItemRepository;
 import ru.practicum.shareit.request.repository.IItemRequestRepository;
@@ -14,7 +13,7 @@ import java.util.ArrayList;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest(classes = {ShareItApp.class})
+@DataJpaTest
 public class RequestJpaTests {
     @Autowired
     private IUserRepository userRepository;

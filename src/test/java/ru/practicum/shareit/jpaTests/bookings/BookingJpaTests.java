@@ -2,8 +2,7 @@ package ru.practicum.shareit.jpaTests.bookings;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import ru.practicum.shareit.ShareItApp;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import ru.practicum.shareit.booking.repository.IBookingRepository;
 import ru.practicum.shareit.item.repository.IItemRepository;
 import ru.practicum.shareit.user.repository.IUserRepository;
@@ -11,7 +10,7 @@ import ru.practicum.shareit.utils.EntityGenerator;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest(classes = {ShareItApp.class})
+@DataJpaTest
 public class BookingJpaTests {
 
     @Autowired

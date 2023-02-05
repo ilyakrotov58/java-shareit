@@ -12,6 +12,7 @@ import ru.practicum.shareit.exceptions.NotFoundException;
 import ru.practicum.shareit.exceptions.ValidateException;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.item.repository.IItemRepository;
+import ru.practicum.shareit.request.dto.ItemRequestDto;
 import ru.practicum.shareit.request.dto.ItemRequestDtoMapper;
 import ru.practicum.shareit.request.model.ItemRequest;
 import ru.practicum.shareit.request.repository.IItemRequestRepository;
@@ -56,8 +57,19 @@ public class GetUsersRequestsTests {
         var itemList = new ArrayList<Item>();
         itemList.add(item);
 
+        var itemRequestDto = new ItemRequestDto.Item(
+                item.getId(),
+                item.getName(),
+                item.getDescription(),
+                item.getAvailable(),
+                item.getRequestId()
+        );
+
+        var itemListRequestDto = new ArrayList<ItemRequestDto.Item>();
+        itemListRequestDto.add(itemRequestDto);
+
         var requestDto = ItemRequestDtoMapper.toDto(request);
-        requestDto.setItems(itemList);
+        requestDto.setItems(itemListRequestDto);
         requestDto.setUserId(user.getId());
 
         var requestList = new ArrayList<ItemRequest>();

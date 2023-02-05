@@ -4,6 +4,10 @@ create sequence if not exists user_id_seq as integer;
 
 create sequence if not exists request_id_seq as integer;
 
+create sequence if not exists booking_id_seq as integer;
+
+create sequence if not exists comment_id_seq as integer;
+
 create table if not exists users
 (
     id        integer default nextval('user_id_seq') not null
@@ -53,7 +57,9 @@ create unique index if not exists item_id_uindex on items (id);
 
 create table if not exists bookings
 (
-    id bigint constraint bookings_pk primary key,
+    id           integer default nextval('booking_id_seq') not null
+        constraint bookings_pk
+            primary key,
     booker_id      integer     not null
         constraint bookings_users_id_fk
             references users
@@ -71,7 +77,7 @@ create unique index if not exists bookings_id_uindex on bookings (id);
 
 create table if not exists comments
 (
-    id         bigint
+    id         integer default nextval('comment_id_seq') not null
         constraint comments_pk
             primary key,
     text       text    not null,
