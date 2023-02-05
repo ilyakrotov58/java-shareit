@@ -84,6 +84,10 @@ public class GetRequestTests {
                 .when(itemRepository.getItemsByRequestId(Mockito.anyLong()))
                 .thenReturn(itemList);
 
+        Mockito
+                .when(itemRepository.findAll())
+                .thenReturn(itemList);
+
         // Act
         var actualRequests = itemRequestService.get(user.getId());
 
