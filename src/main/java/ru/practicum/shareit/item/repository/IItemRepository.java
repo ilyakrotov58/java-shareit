@@ -12,4 +12,8 @@ public interface IItemRepository extends JpaRepository<Item, Long> {
             "WHERE item.userId = ?1 " +
             "ORDER BY item.id")
     List<Item> getAll(long userId);
+
+    @Query("SELECT item FROM Item item " +
+            "WHERE item.requestId = ?1 ")
+    List<Item> getItemsByRequestId(long requestId);
 }

@@ -2,23 +2,35 @@ package ru.practicum.shareit.request.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import ru.practicum.shareit.item.model.Item;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
+@Entity
+@Table(name = "requests", schema = "public")
 public class ItemRequest {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @NotNull
-    private long userId;
+    @Column(name = "description")
+    private String description;
 
-    @NotNull
-    private String itemName;
+    @Column(name = "created")
+    private LocalDateTime created;
 
-    @Size(max = 200, message = "Description of item is more than 200 symbols")
-    private String itemDescription;
+    @Column(name = "user_id")
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private Long userId;
 
+    @OneToMany
+    @JoinColumn(name = "request_id", referencedColumnName = "id")
+    private List<Item> items;
 }

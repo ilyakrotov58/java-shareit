@@ -68,11 +68,11 @@ public class ItemService implements IItemService {
         checkIfUserExists(userId);
         checkIfItemExists(itemId);
 
-        if (itemRepository.findById(itemId).get().getUserId() != userId) {
+        var oldItem = itemRepository.findById(itemId).get();
+
+        if (oldItem.getUserId() != userId) {
             throw new UserIsNotOwnerException(String.format("User with id = %s is not owner", userId));
         }
-
-        var oldItem = itemRepository.findById(itemId).get();
 
         if (item.getName() == null) item.setName(oldItem.getName());
         if (item.getDescription() == null) item.setDescription(oldItem.getDescription());
@@ -89,6 +89,7 @@ public class ItemService implements IItemService {
         var item = itemRepository.findById(itemId);
 
         checkIfItemExists(itemId);
+        checkIfUserExists(userId);
 
         var itemDto = ItemDtoMapper.toDto(item.get());
         var bookingsForItem = bookingRepository.getAllItemsBookings(item.get().getUserId());
@@ -110,7 +111,10 @@ public class ItemService implements IItemService {
     }
 
     @Override
-    public List<ItemDto> getAllByText(String text) {
+    public List<ItemDto> getAllByText(String text, long index, long size) {
+
+        checkIndex(index);
+        checkSize(size);
 
         var itemsDto = new ArrayList<ItemDto>();
         if (text.isEmpty()) {
@@ -128,11 +132,21 @@ public class ItemService implements IItemService {
         for (Item item : selectedItems) {
             itemsDto.add(ItemDtoMapper.toDto(item));
         }
-        return itemsDto;
+
+        return itemsDto
+                .stream()
+                .skip(index)
+                .limit(size)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public List<ItemDto> getAll(long userId) {
+    public List<ItemDto> getAll(long userId, long index, long size) {
+
+        checkIndex(index);
+        checkSize(size);
+        checkIfUserExists(userId);
+
         var items = itemRepository.getAll(userId);
         var itemsDto = new ArrayList<ItemDto>();
         for (Item item : items) {
@@ -147,12 +161,13 @@ public class ItemService implements IItemService {
         return itemsDto
                 .stream()
                 .sorted((o1, o2) -> o1.getId() < o2.getId() ? 0 : 1)
+                .skip(index)
+                .limit(size)
                 .collect(Collectors.toList());
     }
 
     @Override
     public CommentDto addComment(long userId, long itemId, CommentDto commentDto) {
-
 
         checkIfUserExists(userId);
         checkIfItemExists(itemId);
@@ -189,7 +204,10 @@ public class ItemService implements IItemService {
             throw new ValidateException("Can't add comment for future bookings");
         }
 
-        return CommentDtoMapper.toDto(commentRepository.save(comment));
+        var savedCommentDto = commentRepository.save(comment);
+        log.info(String.format("Comment with id =%s was added", savedCommentDto.getId()));
+
+        return CommentDtoMapper.toDto(savedCommentDto);
     }
 
     private void checkIfUserExists(long userId) {
@@ -235,6 +253,18 @@ public class ItemService implements IItemService {
             } else if (filteredBookings.size() == 1) {
                 itemDto.setNextBooking(filteredBookingsItemDto.get(0));
             }
+        }
+    }
+
+    private void checkSize(long size) {
+        if (size < 1) {
+            throw new ValidateException("Size should be > 0");
+        }
+    }
+
+    private void checkIndex(long index) {
+        if (index < 0) {
+            throw new ValidateException("Index should be >= 0");
         }
     }
 }

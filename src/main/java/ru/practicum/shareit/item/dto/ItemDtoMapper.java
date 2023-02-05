@@ -30,16 +30,24 @@ public class ItemDtoMapper {
                 item.getAvailable(),
                 null,
                 null,
+                item.getRequestId(),
                 itemDtoComments);
     }
 
     public static Item fromDto(ItemDto itemDto) {
+        Long itemRequestId = null;
+
+        if (itemDto.getRequestId() != null) {
+            itemRequestId = itemDto.getRequestId();
+        }
+
         return new Item(
                 itemDto.getId(),
                 itemDto.getUserId(),
                 itemDto.getName(),
                 itemDto.getDescription(),
                 itemDto.getAvailable(),
+                itemRequestId,
                 new ArrayList<>());
     }
 }
