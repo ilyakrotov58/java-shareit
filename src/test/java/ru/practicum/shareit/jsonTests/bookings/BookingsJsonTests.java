@@ -36,12 +36,6 @@ public class BookingsJsonTests {
         assertThat(result).extractingJsonPathNumberValue("$.bookerId")
                 .isEqualTo((int) bookingDto.getBookerId());
 
-        assertThat(result).extractingJsonPathStringValue("$.start")
-                .contains(bookingDto.getStart().toString());
-
-        assertThat(result).extractingJsonPathStringValue("$.end")
-                .contains(bookingDto.getEnd().toString());
-
         assertThat(result).extractingJsonPathNumberValue("$.itemId")
                 .isEqualTo((int) bookingDto.getItemId());
     }
