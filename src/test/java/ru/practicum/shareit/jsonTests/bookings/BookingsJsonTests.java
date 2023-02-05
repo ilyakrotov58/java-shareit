@@ -85,10 +85,10 @@ public class BookingsJsonTests {
         assertThat(result).extractingJsonPathValue("$.item.comments")
                 .isEqualTo(bookingDtoExt.getItem().getComments());
 
-        assertThat(result).extractingJsonPathStringValue("$.start")
+        assertThat(result).extractingJsonPathStringValue("$.start" + "0")
                 .contains(bookingDtoExt.getStart().toString());
 
-        assertThat(result).extractingJsonPathStringValue("$.end")
+        assertThat(result).extractingJsonPathStringValue("$.end" + "0")
                 .contains(bookingDtoExt.getEnd().toString());
 
         assertThat(result).extractingJsonPathStringValue("$.status")
