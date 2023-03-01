@@ -32,12 +32,6 @@ public class ExceptionHandlers {
     }
 
     @ExceptionHandler
-    public ResponseEntity<String> handleAlreadyExistsException(final AlreadyExistsException e) {
-        log.error("500 {}", e.getLocalizedMessage());
-        return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-
-    @ExceptionHandler
     public ResponseEntity<String> handleValidateException(final ValidateException e) {
         log.error("400 {}", e.getLocalizedMessage());
         return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
