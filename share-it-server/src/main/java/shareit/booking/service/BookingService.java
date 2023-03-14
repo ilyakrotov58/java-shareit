@@ -40,7 +40,6 @@ public class BookingService implements IBookingService {
     public BookingDtoExt add(BookingDto bookingDto, long userId) {
 
         checkIfUserExists(userId);
-        checkStartEndDates(bookingDto);
 
         if (itemRepository.findById(bookingDto.getItemId()).isEmpty()) {
             throw new NotFoundException(String.format("Item with id = %s can't be found", bookingDto.getItemId()));
@@ -190,12 +189,6 @@ public class BookingService implements IBookingService {
     private void checkIfUserExists(long userId) {
         if (userRepository.findById(userId).isEmpty()) {
             throw new NotFoundException(String.format("User with id = %s can't be found", userId));
-        }
-    }
-
-    private void checkStartEndDates(BookingDto bookingDto) {
-        if (bookingDto.getEnd().isBefore(bookingDto.getStart())) {
-            throw new ValidateException("Start date can't be after end date");
         }
     }
 }

@@ -7,16 +7,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import shareit.booking.dto.BookingDto;
 import shareit.booking.dto.BookingDtoExt;
 
-import javax.validation.Valid;
 import java.util.List;
 
 public interface IBookingService {
 
-    BookingDtoExt add(@Valid
-                      @RequestBody BookingDto bookingDto,
+    BookingDtoExt add(@RequestBody BookingDto bookingDto,
                       @RequestHeader("X-Sharer-User-Id") long userId);
 
-    BookingDtoExt approve(@Valid @PathVariable long bookingId,
+    BookingDtoExt approve(@PathVariable long bookingId,
                           @RequestParam boolean approved,
                           @RequestHeader("X-Sharer-User-Id") long userId);
 

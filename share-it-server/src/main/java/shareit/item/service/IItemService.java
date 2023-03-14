@@ -7,20 +7,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 import shareit.item.dto.CommentDto;
 import shareit.item.dto.ItemDto;
 
-import javax.validation.Valid;
 import java.util.List;
 
 public interface IItemService {
 
-    ItemDto add(@Valid
-                @RequestBody ItemDto item,
+    ItemDto add(@RequestBody ItemDto item,
                 @RequestHeader("X-Sharer-User-Id") long userId);
 
     ItemDto edit(@RequestBody ItemDto itemDto,
                  @PathVariable long itemId,
                  @RequestHeader("X-Sharer-User-Id") long userId);
 
-    ItemDto getById(@Valid @PathVariable long itemId, @RequestHeader("X-Sharer-User-Id") long userId);
+    ItemDto getById(@PathVariable long itemId, @RequestHeader("X-Sharer-User-Id") long userId);
 
     void deleteById(@PathVariable long itemId,
                     @RequestHeader("X-Sharer-User-Id") long userId);

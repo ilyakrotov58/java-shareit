@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.util.DefaultUriBuilderFactory;
 import shareit.booking.dto.BookingDto;
 import shareit.client.BaseClient;
+import shareit.exceptions.DateBeforeAboveDateAfterException;
 
 import java.util.Map;
 
@@ -32,6 +33,9 @@ public class BookingService extends BaseClient {
     }
 
     public ResponseEntity<Object> add(BookingDto bookingDto, long userId) {
+        if (bookingDto.getStart().isAfter(bookingDto.getEnd())) {
+            throw new DateBeforeAboveDateAfterException("Booking start date can't be after end date");
+        }
         return post("", userId, null, bookingDto);
     }
 

@@ -6,17 +6,14 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import shareit.request.dto.ItemRequestDto;
 
-import javax.validation.Valid;
 import java.util.List;
 
 public interface IItemRequestService {
 
-    ItemRequestDto add(@Valid
-                       @RequestHeader("X-Sharer-User-Id") long userId,
+    ItemRequestDto add(@RequestHeader("X-Sharer-User-Id") long userId,
                        @RequestBody ItemRequestDto itemRequestDto);
 
-    List<ItemRequestDto> get(@Valid
-                             @RequestHeader("X-Sharer-User-Id") long userId);
+    List<ItemRequestDto> get(@RequestHeader("X-Sharer-User-Id") long userId);
 
     List<ItemRequestDto> getUsersRequests(
             @RequestHeader("X-Sharer-User-Id") long userId,
