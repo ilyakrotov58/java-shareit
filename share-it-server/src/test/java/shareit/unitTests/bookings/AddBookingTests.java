@@ -13,12 +13,10 @@ import shareit.booking.service.BookingService;
 import shareit.booking.service.IBookingService;
 import shareit.exceptions.AvailableStatusIsFalseException;
 import shareit.exceptions.NotFoundException;
-import shareit.exceptions.ValidateException;
 import shareit.item.repository.IItemRepository;
 import shareit.user.repository.IUserRepository;
 import shareit.utils.EntityGenerator;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
