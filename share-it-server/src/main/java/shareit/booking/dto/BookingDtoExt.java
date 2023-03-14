@@ -57,7 +57,7 @@ public class BookingDtoExt {
 
             private String authorName;
 
-            private LocalDateTime createdAt;
+            private LocalDateTime created;
         }
     }
 

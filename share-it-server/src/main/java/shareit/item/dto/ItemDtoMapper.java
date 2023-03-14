@@ -16,7 +16,7 @@ public class ItemDtoMapper {
                     comment.getId(),
                     comment.getText(),
                     comment.getAuthor().getName(),
-                    comment.getCreatedAt()
+                    comment.getCreated()
             );
 
             itemDtoComments.add(itemDtoComment);

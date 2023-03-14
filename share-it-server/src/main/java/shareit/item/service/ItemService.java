@@ -176,7 +176,7 @@ public class ItemService implements IItemService {
         var item = itemRepository.getReferenceById(itemId);
 
         var comment = CommentDtoMapper.fromDto(commentDto, user, item);
-        comment.setCreatedAt(LocalDateTime.now());
+        comment.setCreated(LocalDateTime.now());
 
         if (comment.getText().isEmpty()) {
             throw new ValidateException("Text can't be empty");
@@ -200,7 +200,7 @@ public class ItemService implements IItemService {
 
         if (isAllBookingsWithFutureStatus
                 .stream()
-                .allMatch(booking -> booking.getStart().isAfter(comment.getCreatedAt()))) {
+                .allMatch(booking -> booking.getStart().isAfter(comment.getCreated()))) {
             throw new ValidateException("Can't add comment for future bookings");
         }
 

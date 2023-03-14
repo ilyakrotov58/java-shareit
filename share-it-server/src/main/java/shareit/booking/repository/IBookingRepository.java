@@ -9,7 +9,7 @@ import java.util.List;
 public interface IBookingRepository extends JpaRepository<Booking, Long> {
 
     @Query(value = "SELECT * FROM bookings " +
-            "WHERE bookings.booker_id = (?1)" +
+            "WHERE bookings.booker_id = ?1 " +
             "ORDER BY bookings.start_date DESC", nativeQuery = true)
     List<Booking> getAll(long userId);
 

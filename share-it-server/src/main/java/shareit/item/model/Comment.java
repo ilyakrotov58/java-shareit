@@ -31,5 +31,5 @@ public class Comment {
     private Item item;
 
     @Column(name = "created_at", nullable = false)
-    private LocalDateTime createdAt;
+    private LocalDateTime created;
 }

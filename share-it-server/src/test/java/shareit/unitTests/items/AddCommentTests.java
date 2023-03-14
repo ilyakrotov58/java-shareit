@@ -89,7 +89,7 @@ public class AddCommentTests {
                 .hasFieldOrPropertyWithValue("id", commentDto.getId())
                 .hasFieldOrPropertyWithValue("text", commentDto.getText())
                 .hasFieldOrPropertyWithValue("authorName", commentDto.getAuthorName())
-                .hasFieldOrPropertyWithValue("createdAt", commentDto.getCreatedAt());
+                .hasFieldOrPropertyWithValue("created", commentDto.getCreated());
     }
 
     @Test

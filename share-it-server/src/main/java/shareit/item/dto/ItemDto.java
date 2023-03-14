@@ -55,6 +55,6 @@ public class ItemDto {
 
         private String authorName;
 
-        private LocalDateTime createdAt;
+        private LocalDateTime created;
     }
 }

@@ -53,7 +53,7 @@ public class BookingsJsonTests {
                 comment.getId(),
                 comment.getText(),
                 comment.getAuthor().getName(),
-                comment.getCreatedAt()
+                comment.getCreated()
         ));
 
         var bookingDtoExt = BookingDtoMapper.toExtDto(booking);

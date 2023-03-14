@@ -71,6 +71,6 @@ public class ItemDto {
         private String authorName;
 
         @NotNull
-        private LocalDateTime createdAt;
+        private LocalDateTime created;
     }
 }

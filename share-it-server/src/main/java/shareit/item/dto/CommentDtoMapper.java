@@ -11,7 +11,7 @@ public class CommentDtoMapper {
                 comment.getId(),
                 comment.getText(),
                 comment.getAuthor().getName(),
-                comment.getCreatedAt());
+                comment.getCreated());
     }
 
     public static Comment fromDto(CommentDto commentDto, User user, Item item) {
@@ -20,6 +20,6 @@ public class CommentDtoMapper {
                 commentDto.getText(),
                 user,
                 item,
-                commentDto.getCreatedAt());
+                commentDto.getCreated());
     }
 }

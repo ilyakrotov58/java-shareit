@@ -22,5 +22,5 @@ public class CommentDto {
     private String authorName;
 
     @NotNull
-    private LocalDateTime createdAt;
+    private LocalDateTime created;
 }
