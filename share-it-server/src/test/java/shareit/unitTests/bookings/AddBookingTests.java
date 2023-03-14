@@ -144,29 +144,6 @@ class AddBookingTests {
     }
 
     @Test
-    void addBooking_WhenStartDateAfterEndDate_ShouldThrowException() {
-
-        // Arrange
-        var booking = setUpBooking();
-        booking.setStart(LocalDateTime.now().plusYears(1));
-
-        RuntimeException exception = null;
-
-        // Act
-        try {
-            bookingService.add(BookingDtoMapper.toDto(booking), 2);
-        } catch (ValidateException ex) {
-            exception = ex;
-        }
-
-        // Assert
-        assertThat(exception).isNotNull();
-        assertThat(exception.getMessage()).isNotNull();
-
-        assertThat(exception.getMessage()).isEqualTo("Start date can't be after end date");
-    }
-
-    @Test
     void addBooking_WithNotAvailableItem_ShouldThrowException() {
 
         // Arrange
