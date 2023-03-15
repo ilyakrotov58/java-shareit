@@ -253,7 +253,7 @@ public class ItemService implements IItemService {
                         .stream()
                         .filter(b -> b.getStart().isBefore(LocalDateTime.now()))
                         .sorted((o1, o2) -> {
-                            if(o1.getEnd().isAfter(o2.getEnd())) {
+                            if (o1.getEnd().isAfter(o2.getEnd())) {
                                 return 1;
                             } else {
                                 return 0;
