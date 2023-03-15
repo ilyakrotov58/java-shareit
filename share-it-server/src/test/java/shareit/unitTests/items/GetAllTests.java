@@ -97,8 +97,8 @@ public class GetAllTests {
                 .hasFieldOrPropertyWithValue("name", itemDto.getName())
                 .hasFieldOrPropertyWithValue("description", itemDto.getDescription())
                 .hasFieldOrPropertyWithValue("available", itemDto.getAvailable())
-                .hasFieldOrPropertyWithValue("lastBooking", null)
-                .hasFieldOrPropertyWithValue("nextBooking", itemDto.getNextBooking())
+                .hasFieldOrPropertyWithValue("lastBooking", itemDto.getNextBooking())
+                .hasFieldOrPropertyWithValue("nextBooking", null)
                 .hasFieldOrPropertyWithValue("requestId", itemDto.getRequestId())
                 .hasFieldOrPropertyWithValue("comments", new ArrayList<>());
     }
