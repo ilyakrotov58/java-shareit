@@ -227,7 +227,8 @@ public class ItemService implements IItemService {
             var filteredBookings = bookingsForItem
                     .stream()
                     .filter(booking -> booking.getStatus() != BookingStatus.REJECTED
-                            && booking.getStatus() != BookingStatus.WAITING)
+                            && booking.getStatus() != BookingStatus.WAITING
+                            && booking.getStatus() == BookingStatus.APPROVED)
                     .filter(booking -> booking.getItem().getUserId() == userId)
                     .filter(booking -> booking.getItem().getId() == itemDto.getId())
                     .map(BookingDtoMapper::toDto)
@@ -248,8 +249,32 @@ public class ItemService implements IItemService {
             }
 
             if (filteredBookings.size() > 1) {
-                itemDto.setLastBooking(filteredBookingsItemDto.get(filteredBookings.size() - 1));
-                itemDto.setNextBooking(filteredBookingsItemDto.get(filteredBookings.size() - 2));
+                var lastBooking = filteredBookingsItemDto
+                        .stream()
+                        .filter(b -> b.getStart().isBefore(LocalDateTime.now()))
+                        .sorted((o1, o2) -> {
+                            if(o1.getEnd().isAfter(o2.getEnd())) {
+                                return 1;
+                            } else {
+                                return 0;
+                            }
+                        })
+                        .collect(Collectors.toList());
+
+                var nextBooking = filteredBookingsItemDto
+                        .stream()
+                        .filter(b -> b.getStart().isAfter(LocalDateTime.now()))
+                        .sorted((o1, o2) -> {
+                            if (o1.getStart().isBefore(o2.getStart())) {
+                                return 1;
+                            } else {
+                                return 0;
+                            }
+                        })
+                        .collect(Collectors.toList());
+
+                itemDto.setLastBooking(lastBooking.get(0));
+                itemDto.setNextBooking(nextBooking.get(nextBooking.size() - 1));
             } else if (filteredBookings.size() == 1) {
                 itemDto.setNextBooking(filteredBookingsItemDto.get(0));
             }
