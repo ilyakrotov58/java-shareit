@@ -276,7 +276,7 @@ public class ItemService implements IItemService {
                 itemDto.setLastBooking(lastBooking.get(0));
                 itemDto.setNextBooking(nextBooking.get(nextBooking.size() - 1));
             } else if (filteredBookings.size() == 1) {
-                itemDto.setNextBooking(filteredBookingsItemDto.get(0));
+                itemDto.setLastBooking(filteredBookingsItemDto.get(0));
             }
         }
     }
